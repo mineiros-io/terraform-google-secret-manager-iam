@@ -37,9 +37,12 @@ secure, and production-grade cloud infrastructure.
 
 ## Module Features
 
-A [Terraform] base module for creating a `google_secret_manager_secret_iam_*` resources.
+This module implements the following terraform resources:
 
-It allows authoritative bindings (exclusive setting members), non-authoritative (adding additional members), or policy based IAM management of resource level access.
+- `google_secret_manager_secret_iam_binding`
+- `google_secret_manager_secret_iam_member`
+- `google_secret_manager_secret_iam_policy`
+- `google_iam_policy`
 
 ## Getting Started
 
@@ -47,11 +50,11 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-secret-manager-iam" {
-  source     = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.1.0"
+  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.1.0"
 
-  secret_id  = google_secret_manager_secret.secret-basic.secret_id
-  role       = "roles/secretmanager.secretAccessor"
-  members    = ["user:admin@example.com"]
+  secret_id = google_secret_manager_secret.secret-basic.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  members   = ["user:admin@example.com"]
 }
 ```
 
@@ -113,6 +116,58 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `true`.
 
+- **`policy_bindings`**: _(Optional `list(policy_bindings)`)_
+
+  A list of IAM policy bindings.
+
+  Example
+
+  ```hcl
+  policy_bindings = [{
+    role    = "roles/secretmanager.secretAccessor"
+    members = ["user:member@example.com"]
+  }]
+  ```
+
+  Each `policy_bindings` object accepts the following fields:
+
+  - **`role`**: **_(Required `string`)_**
+
+    The role that should be applied.
+
+  - **`members`**: **_(Required `string`)_**
+
+    Identities that will be granted the privilege in `role`.
+
+    Default is `var.members`.
+
+  - **`condition`**: _(Optional `object(condition)`)_
+
+    An IAM Condition for a given binding.
+
+    Example
+
+    ```hcl
+    condition = {
+      expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
+      title      = "expires_after_2021_12_31"
+    }
+  ```
+
+  A `condition` object accepts the following fields:
+
+  - **`expression`**: **_(Required `string`)_**
+
+    Textual representation of an expression in Common Expression Language syntax.
+
+  - **`title`**: **_(Required `string`)_**
+
+    A title for the expression, i.e. a short string describing its purpose.
+
+  - **`description`**: _(Optional `string`)_
+
+    An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
+
 #### Extended Resource Configuration
 
 ## Module Attributes Reference
@@ -125,7 +180,7 @@ The following attributes are exported in the outputs of the module:
 
 - **`iam`**
 
-  All attributes of the created `google_secret_manager_secret_iam_*` resource according to the mode.
+  All attributes of the created `iam_binding` or `iam_member` or `iam_policy` resource according to the mode.
 
 ## External Documentation
 
