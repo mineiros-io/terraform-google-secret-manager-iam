@@ -15,25 +15,24 @@ This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
 
-- [terraform-google-secret-manager-iam](#terraform-google-secret-manager-iam)
-  - [Module Features](#module-features)
-  - [Getting Started](#getting-started)
-  - [Module Argument Reference](#module-argument-reference)
-    - [Top-level Arguments](#top-level-arguments)
-      - [Module Configuration](#module-configuration)
-      - [Main Resource Configuration](#main-resource-configuration)
-      - [Extended Resource Configuration](#extended-resource-configuration)
-  - [Module Attributes Reference](#module-attributes-reference)
-  - [External Documentation](#external-documentation)
-    - [Google Documentation](#google-documentation)
-    - [Terraform Google Provider Documentation](#terraform-google-provider-documentation)
-  - [Module Versioning](#module-versioning)
-    - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
-  - [About Mineiros](#about-mineiros)
-  - [Reporting Issues](#reporting-issues)
-  - [Contributing](#contributing)
-  - [Makefile Targets](#makefile-targets)
-  - [License](#license)
+- [Module Features](#module-features)
+- [Getting Started](#getting-started)
+- [Module Argument Reference](#module-argument-reference)
+  - [Top-level Arguments](#top-level-arguments)
+    - [Module Configuration](#module-configuration)
+    - [Main Resource Configuration](#main-resource-configuration)
+    - [Extended Resource Configuration](#extended-resource-configuration)
+- [Module Attributes Reference](#module-attributes-reference)
+- [External Documentation](#external-documentation)
+  - [Google Documentation](#google-documentation)
+  - [Terraform Google Provider Documentation](#terraform-google-provider-documentation)
+- [Module Versioning](#module-versioning)
+  - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
+- [About Mineiros](#about-mineiros)
+- [Reporting Issues](#reporting-issues)
+- [Contributing](#contributing)
+- [Makefile Targets](#makefile-targets)
+- [License](#license)
 
 ## Module Features
 
@@ -42,7 +41,6 @@ This module implements the following terraform resources:
 - `google_secret_manager_secret_iam_binding`
 - `google_secret_manager_secret_iam_member`
 - `google_secret_manager_secret_iam_policy`
-- `google_iam_policy`
 
 ## Getting Started
 
@@ -152,21 +150,21 @@ See [variables.tf] and [examples/] for details and use-cases.
       expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
       title      = "expires_after_2021_12_31"
     }
-  ```
+    ```
 
-  A `condition` object accepts the following fields:
+    A `condition` object accepts the following fields:
 
-  - **`expression`**: **_(Required `string`)_**
+    - **`expression`**: **_(Required `string`)_**
 
-    Textual representation of an expression in Common Expression Language syntax.
+      Textual representation of an expression in Common Expression Language syntax.
 
-  - **`title`**: **_(Required `string`)_**
+    - **`title`**: **_(Required `string`)_**
 
-    A title for the expression, i.e. a short string describing its purpose.
+      A title for the expression, i.e. a short string describing its purpose.
 
-  - **`description`**: _(Optional `string`)_
+    - **`description`**: _(Optional `string`)_
 
-    An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
+      An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
 #### Extended Resource Configuration
 
