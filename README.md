@@ -90,7 +90,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The id of the secret.
 
-- **`members`**: **_(Optional `string`)_
+- **`members`**: _(Optional `string`)_
 
   Identities that will be granted the privilege in role. Each entry can have one of the following values:
   - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
@@ -102,7 +102,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `[]`.
 
-- **`role`**: **_(Required `string`)_**
+- **`role`**: _(Optional `string`)_
 
   The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
 
