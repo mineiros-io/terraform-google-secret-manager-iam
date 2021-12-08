@@ -1,8 +1,8 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>][homepage]
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-google-secret-manager-iam)
 
-[![Terraform Version][badge-terraform]][releases-terraform]
-[![Google Provider Version][badge-tf-gcp]][releases-google-provider]
-[![Join Slack][badge-slack]][slack]
+[![Terraform Version](https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
+[![Google Provider Version](https://img.shields.io/badge/google-3.x-1A73E8.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-google/releases)
+[![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://mineiros.io/slack)
 
 # terraform-google-secret-manager-iam
 
@@ -14,6 +14,7 @@ and is compatible with the Terraform Google Provider version 3._**
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
+
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
@@ -64,13 +65,13 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Module Configuration
 
-- **`module_enabled`**: _(Optional `bool`)_
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
 
   Specifies whether resources in the module will be created.
 
   Default is `true`.
 
-- **`module_depends_on`**: _(Optional `list(dependencies)`)_
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
@@ -84,11 +85,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Main Resource Configuration
 
-- **`secret_id`**: **_(Required `string`)_**
+- [**`secret_id`**](#var-secret_id): *(**Required** `string`)*<a name="var-secret_id"></a>
 
   The id of the secret.
 
-- **`members`**: _(Optional `set(string)`)_
+- [**`members`**](#var-members): *(Optional `set(string)`)*<a name="var-members"></a>
 
   Identities that will be granted the privilege in role. Each entry can have one of the following values:
   - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
@@ -103,25 +104,25 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `[]`.
 
-- **`role`**: _(Optional `string`)_
+- [**`role`**](#var-role): *(Optional `string`)*<a name="var-role"></a>
 
   The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
 
-- **`project`**: _(Optional `string`)_
+- [**`project`**](#var-project): *(Optional `string`)*<a name="var-project"></a>
 
   The ID of the project in which the resource belongs. If it is not provided, the project will be parsed from the identifier of the parent resource. If no project is provided in the parent identifier and no project is specified, the provider project is used.
 
-- **`authoritative`**: _(Optional `bool`)_
+- [**`authoritative`**](#var-authoritative): *(Optional `bool`)*<a name="var-authoritative"></a>
 
   Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
 
   Default is `true`.
 
-- **`policy_bindings`**: _(Optional `list(policy_bindings)`)_
+- [**`policy_bindings`**](#var-policy_bindings): *(Optional `list(policy_bindings)`)*<a name="var-policy_bindings"></a>
 
   A list of IAM policy bindings.
 
-  Example
+  Example:
 
   ```hcl
   policy_bindings = [{
@@ -130,23 +131,23 @@ See [variables.tf] and [examples/] for details and use-cases.
   }]
   ```
 
-  Each `policy_bindings` object accepts the following fields:
+  Each object in the list accepts the following attributes:
 
-  - **`role`**: **_(Required `string`)_**
+  - [**`role`**](#attr-role-1): *(**Required** `string`)*<a name="attr-role-1"></a>
 
     The role that should be applied.
 
-  - **`members`**: _(Optional `set(string)`)_
+  - [**`members`**](#attr-members-1): *(Optional `set(string)`)*<a name="attr-members-1"></a>
 
     Identities that will be granted the privilege in `role`.
 
-    Default is `var.members`.
+    Default is `"var.members"`.
 
-  - **`condition`**: _(Optional `object(condition)`)_
+  - [**`condition`**](#attr-condition-1): *(Optional `object(condition)`)*<a name="attr-condition-1"></a>
 
     An IAM Condition for a given binding.
 
-    Example
+    Example:
 
     ```hcl
     condition = {
@@ -155,17 +156,17 @@ See [variables.tf] and [examples/] for details and use-cases.
     }
     ```
 
-    A `condition` object accepts the following fields:
+    The object accepts the following attributes:
 
-    - **`expression`**: **_(Required `string`)_**
+    - [**`expression`**](#attr-expression-2): *(**Required** `string`)*<a name="attr-expression-2"></a>
 
       Textual representation of an expression in Common Expression Language syntax.
 
-    - **`title`**: **_(Required `string`)_**
+    - [**`title`**](#attr-title-2): *(**Required** `string`)*<a name="attr-title-2"></a>
 
       A title for the expression, i.e. a short string describing its purpose.
 
-    - **`description`**: _(Optional `string`)_
+    - [**`description`**](#attr-description-2): *(Optional `string`)*<a name="attr-description-2"></a>
 
       An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
@@ -250,36 +251,12 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 
 [homepage]: https://mineiros.io/?ref=terraform-google-secret-manager-iam
 [hello@mineiros.io]: mailto:hello@mineiros.io
-
-<!-- markdown-link-check-enable -->
-
-[badge-build]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/workflows/Tests/badge.svg
-
-<!-- markdown-link-check-enable -->
-
-[badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-google-secret-manager-iam.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform
-[badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
-
-<!-- markdown-link-check-enable -->
-
-[build-status]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/actions
-[releases-github]: https://github.com/mineiros-io/erraform-google-secret-manager-iam/releases
-
-<!-- markdown-link-check-enable -->
-
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
-[badge-tf-gcp]: https://img.shields.io/badge/google-3.x-1A73E8.svg?logo=terraform
-[releases-google-provider]: https://github.com/terraform-providers/terraform-provider-google/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://mineiros.io/slack
 [terraform]: https://www.terraform.io
-[gcp]: https://cloud.google.com/
 [semantic versioning (semver)]: https://semver.org/
-
-<!-- markdown-link-check-disable -->
-
 [variables.tf]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/blob/main/variables.tf
 [examples/]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/blob/main/examples
 [issues]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/issues
@@ -287,5 +264,3 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [makefile]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/blob/main/Makefile
 [pull requests]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/pulls
 [contribution guidelines]: https://github.com/mineiros-io/terraform-google-secret-manager-iam/blob/main/CONTRIBUTING.md
-
-<!-- markdown-link-check-enable -->
