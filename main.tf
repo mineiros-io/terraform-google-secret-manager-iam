@@ -25,7 +25,7 @@ resource "google_secret_manager_secret_iam_policy" "policy" {
 
   project     = var.project
   secret_id   = var.secret_id
-  policy_data = data.google_iam_policy.policy[0].policy_data
+  policy_data = try(data.google_iam_policy.policy[0].policy_data, null)
 
   depends_on = [var.module_depends_on]
 }
@@ -34,11 +34,11 @@ data "google_iam_policy" "policy" {
   count = var.module_enabled && var.policy_bindings != null ? 1 : 0
 
   dynamic "binding" {
-    for_each = var.policy_bindings
+    for_each = [for pb in var.policy_bindings : pb if length(tolist(pb.members)) > 0]
 
     content {
       role    = binding.value.role
-      members = try(binding.value.members, var.members)
+      members = binding.value.members
 
       dynamic "condition" {
         for_each = try([binding.value.condition], [])
