@@ -1,15 +1,15 @@
 [<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-google-secret-manager-iam)
 
 [![Terraform Version](https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
-[![Google Provider Version](https://img.shields.io/badge/google-3.x-1A73E8.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-google/releases)
+[![Google Provider Version](https://img.shields.io/badge/google-4.x-1A73E8.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-google/releases)
 [![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://mineiros.io/slack)
 
 # terraform-google-secret-manager-iam
 
-A [Terraform](https://www.terraform.io) module to create a [Google Secret Manager IAM](https://cloud.google.com/secret-manager/docs/access-control) on [Google Cloud Services (GCP)](https://cloud.google.com/).
+A [Terraform] module to create a [Google Secret Manager IAM](https://cloud.google.com/secret-manager/docs/access-control) on [Google Cloud Services (GCP)](https://cloud.google.com/).
 
 **_This module supports Terraform version 1
-and is compatible with the Terraform Google Provider version 3._**
+and is compatible with the Terraform Google Provider version 4._**
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
@@ -20,9 +20,8 @@ secure, and production-grade cloud infrastructure.
 - [Getting Started](#getting-started)
 - [Module Argument Reference](#module-argument-reference)
   - [Top-level Arguments](#top-level-arguments)
-    - [Module Configuration](#module-configuration)
     - [Main Resource Configuration](#main-resource-configuration)
-    - [Extended Resource Configuration](#extended-resource-configuration)
+    - [Module Configuration](#module-configuration)
 - [Module Attributes Reference](#module-attributes-reference)
 - [External Documentation](#external-documentation)
   - [Google Documentation](#google-documentation)
@@ -49,7 +48,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-secret-manager-iam" {
-  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.1.0"
+  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.4.0"
 
   secret_id = google_secret_manager_secret.secret-basic.secret_id
   role      = "roles/secretmanager.secretAccessor"
@@ -63,26 +62,6 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 ### Top-level Arguments
 
-#### Module Configuration
-
-- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
-
-  Specifies whether resources in the module will be created.
-
-  Default is `true`.
-
-- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
-
-  A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
-
-  Example:
-
-  ```hcl
-  module_depends_on = [
-    google_network.network
-  ]
-  ```
-
 #### Main Resource Configuration
 
 - [**`secret_id`**](#var-secret_id): *(**Required** `string`)*<a name="var-secret_id"></a>
@@ -91,16 +70,14 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`members`**](#var-members): *(Optional `set(string)`)*<a name="var-members"></a>
 
-  Identities that will be granted the privilege in role. Each entry can have one of the following values:
+  A set of identities that will be granted the privilege in role. Each entry can have one of the following values:
+  
   - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
   - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
-  - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
-  - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
-  - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
-  - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
-  - `projectOwner:projectid`: Owners of the given project. For example, `projectOwner:my-example-project`
-  - `projectEditor:projectid`: Editors of the given project. For example, `projectEditor:my-example-project`
-  - `projectViewer:projectid`: Viewers of the given project. For example, `projectViewer:my-example-project`
+  - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+  - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+  - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+  - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
 
   Default is `[]`.
 
@@ -118,32 +95,41 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `true`.
 
-- [**`policy_bindings`**](#var-policy_bindings): *(Optional `list(policy_bindings)`)*<a name="var-policy_bindings"></a>
+- [**`policy_bindings`**](#var-policy_bindings): *(Optional `list(policy_binding)`)*<a name="var-policy_bindings"></a>
 
   A list of IAM policy bindings.
 
   Example:
 
   ```hcl
-  policy_bindings = [{
-    role    = "roles/secretmanager.secretAccessor"
-    members = ["user:member@example.com"]
-  }]
+  policy_bindings = [
+    {
+      role    = "roles/secretmanager.secretAccessor"
+      members = [
+        "user:member@example.com",
+      ]
+    }
+  ]
   ```
 
-  Each object in the list accepts the following attributes:
+  Each `policy_binding` object in the list accepts the following attributes:
 
-  - [**`role`**](#attr-role-1): *(**Required** `string`)*<a name="attr-role-1"></a>
+  - [**`role`**](#attr-policy_bindings-role): *(**Required** `string`)*<a name="attr-policy_bindings-role"></a>
 
-    The role that should be applied.
+    The role that will be grated to the members.
 
-  - [**`members`**](#attr-members-1): *(Optional `set(string)`)*<a name="attr-members-1"></a>
+  - [**`members`**](#attr-policy_bindings-members): *(**Required** `set(string)`)*<a name="attr-policy_bindings-members"></a>
 
-    Identities that will be granted the privilege in `role`.
+    A set of identities that will be granted the privilege in role. Each entry can have one of the following values:
+    
+    - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
+    - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
+    - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+    - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+    - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+    - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
 
-    Default is `"var.members"`.
-
-  - [**`condition`**](#attr-condition-1): *(Optional `object(condition)`)*<a name="attr-condition-1"></a>
+  - [**`condition`**](#attr-policy_bindings-condition): *(Optional `object(condition)`)*<a name="attr-policy_bindings-condition"></a>
 
     An IAM Condition for a given binding.
 
@@ -156,21 +142,39 @@ See [variables.tf] and [examples/] for details and use-cases.
     }
     ```
 
-    The object accepts the following attributes:
+    The `condition` object accepts the following attributes:
 
-    - [**`expression`**](#attr-expression-2): *(**Required** `string`)*<a name="attr-expression-2"></a>
+    - [**`expression`**](#attr-policy_bindings-condition-expression): *(**Required** `string`)*<a name="attr-policy_bindings-condition-expression"></a>
 
       Textual representation of an expression in Common Expression Language syntax.
 
-    - [**`title`**](#attr-title-2): *(**Required** `string`)*<a name="attr-title-2"></a>
+    - [**`title`**](#attr-policy_bindings-condition-title): *(**Required** `string`)*<a name="attr-policy_bindings-condition-title"></a>
 
       A title for the expression, i.e. a short string describing its purpose.
 
-    - [**`description`**](#attr-description-2): *(Optional `string`)*<a name="attr-description-2"></a>
+    - [**`description`**](#attr-policy_bindings-condition-description): *(Optional `string`)*<a name="attr-policy_bindings-condition-description"></a>
 
       An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
-#### Extended Resource Configuration
+#### Module Configuration
+
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
+
+  Specifies whether resources in the module will be created.
+
+  Default is `true`.
+
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
+
+  A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
+
+  Example:
+
+  ```hcl
+  module_depends_on = [
+    null_resource.name
+  ]
+  ```
 
 ## Module Attributes Reference
 
