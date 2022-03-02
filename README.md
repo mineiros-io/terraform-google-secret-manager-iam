@@ -48,7 +48,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-secret-manager-iam" {
-  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.4.0"
+  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.0.4"
 
   secret_id = google_secret_manager_secret.secret-basic.secret_id
   role      = "roles/secretmanager.secretAccessor"
@@ -71,7 +71,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`members`**](#var-members): *(Optional `set(string)`)*<a name="var-members"></a>
 
   A set of identities that will be granted the privilege in role. Each entry can have one of the following values:
-  
+
   - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
   - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
   - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
@@ -121,7 +121,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`members`**](#attr-policy_bindings-members): *(**Required** `set(string)`)*<a name="attr-policy_bindings-members"></a>
 
     A set of identities that will be granted the privilege in role. Each entry can have one of the following values:
-    
+
     - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
     - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
     - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
