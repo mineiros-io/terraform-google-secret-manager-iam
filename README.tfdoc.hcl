@@ -25,8 +25,8 @@ header {
 }
 
 section {
-  title = "terraform-google-secret-manager-iam"
-  toc   = true
+  title   = "terraform-google-secret-manager-iam"
+  toc     = true
   content = <<-END
     A [Terraform] module to create a [Google Secret Manager IAM](https://cloud.google.com/secret-manager/docs/access-control) on [Google Cloud Services (GCP)](https://cloud.google.com/).
 
@@ -39,7 +39,7 @@ section {
   END
 
   section {
-    title = "Module Features"
+    title   = "Module Features"
     content = <<-END
       This module implements the following terraform resources:
 
@@ -50,13 +50,13 @@ section {
   }
 
   section {
-    title = "Getting Started"
+    title   = "Getting Started"
     content = <<-END
       Most basic usage just setting required arguments:
 
       ```hcl
       module "terraform-google-secret-manager-iam" {
-        source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.4.0"
+        source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.0.4"
 
         secret_id = google_secret_manager_secret.secret-basic.secret_id
         role      = "roles/secretmanager.secretAccessor"
@@ -67,7 +67,7 @@ section {
   }
 
   section {
-    title = "Module Argument Reference"
+    title   = "Module Argument Reference"
     content = "See [variables.tf] and [examples/] for details and use-cases."
 
     section {
@@ -94,7 +94,7 @@ section {
             - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
             - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
           END
-          default = []
+          default     = []
         }
 
         variable "role" {
@@ -114,8 +114,8 @@ section {
         }
 
         variable "policy_bindings" {
-          type        = list(policy_binding)
-          description = "A list of IAM policy bindings."
+          type           = list(policy_binding)
+          description    = "A list of IAM policy bindings."
           readme_example = <<-END
             policy_bindings = [
               {
@@ -149,8 +149,8 @@ section {
           }
 
           attribute "condition" {
-            type        = object(condition)
-            description = "An IAM Condition for a given binding."
+            type           = object(condition)
+            description    = "An IAM Condition for a given binding."
             readme_example = <<-END
               condition = {
                 expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
@@ -188,8 +188,8 @@ section {
         }
 
         variable "module_depends_on" {
-          type        = list(dependency)
-          description = "A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency."
+          type           = list(dependency)
+          description    = "A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency."
           readme_example = <<-END
             module_depends_on = [
               null_resource.name
@@ -202,7 +202,7 @@ section {
   }
 
   section {
-    title = "Module Attributes Reference"
+    title   = "Module Attributes Reference"
     content = <<-END
       The following attributes are exported in the outputs of the module:
 
@@ -220,7 +220,7 @@ section {
     title = "External Documentation"
 
     section {
-      title = "Google Documentation"
+      title   = "Google Documentation"
       content = <<-END
         - Secret Manager: <https://cloud.google.com/secret-manager/docs>
         - Secret Manager Access Control: <https://cloud.google.com/secret-manager/docs/access-control>
@@ -228,7 +228,7 @@ section {
     }
 
     section {
-      title = "Terraform Google Provider Documentation"
+      title   = "Terraform Google Provider Documentation"
       content = <<-END
         - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret>
         - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam>
@@ -237,7 +237,7 @@ section {
   }
 
   section {
-    title = "Module Versioning"
+    title   = "Module Versioning"
     content = <<-END
       This Module follows the principles of [Semantic Versioning (SemVer)].
 
@@ -249,7 +249,7 @@ section {
     END
 
     section {
-      title = "Backwards compatibility in `0.0.z` and `0.y.z` version"
+      title   = "Backwards compatibility in `0.0.z` and `0.y.z` version"
       content = <<-END
         - Backwards compatibility in versions `0.0.z` is **not guaranteed** when `z` is increased. (Initial development)
         - Backwards compatibility in versions `0.y.z` is **not guaranteed** when `y` is increased. (Pre-release)
@@ -258,7 +258,7 @@ section {
   }
 
   section {
-    title = "About Mineiros"
+    title   = "About Mineiros"
     content = <<-END
       [Mineiros][homepage] is a remote-first company headquartered in Berlin, Germany
       that solves development, automation and security challenges in cloud infrastructure.
@@ -273,12 +273,12 @@ section {
   }
 
   section {
-    title = "Reporting Issues"
+    title   = "Reporting Issues"
     content = "We use GitHub [Issues] to track community reported issues and missing features."
   }
 
   section {
-    title = "Contributing"
+    title   = "Contributing"
     content = <<-END
       Contributions are always encouraged and welcome! For the process of accepting changes, we use
       [Pull Requests]. If you'd like more information, please see our [Contribution Guidelines].
@@ -286,7 +286,7 @@ section {
   }
 
   section {
-    title = "Makefile Targets"
+    title   = "Makefile Targets"
     content = <<-END
       This repository comes with a handy [Makefile].
       Run `make help` to see details on each available target.
@@ -294,7 +294,7 @@ section {
   }
 
   section {
-    title = "License"
+    title   = "License"
     content = <<-END
       [![license][badge-license]][apache20]
 
