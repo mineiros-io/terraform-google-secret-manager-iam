@@ -23,6 +23,7 @@ secure, and production-grade cloud infrastructure.
     - [Main Resource Configuration](#main-resource-configuration)
     - [Module Configuration](#module-configuration)
 - [Module Attributes Reference](#module-attributes-reference)
+- [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
   - [Google Documentation](#google-documentation)
   - [Terraform Google Provider Documentation](#terraform-google-provider-documentation)
@@ -83,7 +84,9 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`role`**](#var-role): *(Optional `string`)*<a name="var-role"></a>
 
-  The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+  The role that should be applied.
+  Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+  Must be set if `policy_bindings` is unset.
 
 - [**`project`**](#var-project): *(Optional `string`)*<a name="var-project"></a>
 
@@ -97,7 +100,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`policy_bindings`**](#var-policy_bindings): *(Optional `list(policy_binding)`)*<a name="var-policy_bindings"></a>
 
-  A list of IAM policy bindings.
+  A list of IAM policy bindings. If set, `role` is ignored and a policy_binding is created.
 
   Example:
 
@@ -187,6 +190,15 @@ The following attributes are exported in the outputs of the module:
 - **`iam`**
 
   All attributes of the created `iam_binding` or `iam_member` or `iam_policy` resource according to the mode.
+
+## Module Outputs
+
+The following attributes are exported in the outputs of the module:
+
+- [**`iam`**](#output-iam): *(`object(iam)`)*<a name="output-iam"></a>
+
+  All attributes of the created `iam_binding` or `iam_member` or
+  `iam_policy` resource according to the mode.
 
 ## External Documentation
 
