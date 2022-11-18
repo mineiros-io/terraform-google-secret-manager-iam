@@ -99,7 +99,11 @@ section {
 
         variable "role" {
           type        = string
-          description = "The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`."
+          description = <<-END
+            The role that should be applied.
+            Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+            Must be set if `policy_bindings` is unset.
+          END
         }
 
         variable "project" {
@@ -115,7 +119,7 @@ section {
 
         variable "policy_bindings" {
           type           = list(policy_binding)
-          description    = "A list of IAM policy bindings."
+          description    = "A list of IAM policy bindings. If set, `role` is ignored and a policy_binding is created."
           readme_example = <<-END
             policy_bindings = [
               {
@@ -214,6 +218,21 @@ section {
 
         All attributes of the created `iam_binding` or `iam_member` or `iam_policy` resource according to the mode.
     END
+  }
+
+  section {
+    title   = "Module Outputs"
+    content = <<-END
+      The following attributes are exported in the outputs of the module:
+    END
+
+    output "iam" {
+      type        = object(iam)
+      description = <<-END
+        All attributes of the created `iam_binding` or `iam_member` or
+        `iam_policy` resource according to the mode.
+      END
+    }
   }
 
   section {
