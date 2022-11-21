@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- Add support for `computed_members`
+
 ## Removed
 
 - BREAKING CHANGE: remove support for google provider version `3.x`
