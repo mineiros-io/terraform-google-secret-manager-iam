@@ -1,27 +1,33 @@
+locals {
+  create_binding = var.module_enabled && var.policy_bindings == null && var.authoritative
+  create_member  = var.module_enabled && var.policy_bindings == null && var.authoritative == false
+  create_policy  = var.module_enabled && var.policy_bindings != null
+}
+
 resource "google_secret_manager_secret_iam_binding" "binding" {
-  count = var.module_enabled && var.policy_bindings == null && var.authoritative ? 1 : 0
+  count = local.create_binding ? 1 : 0
 
   project   = var.project
   secret_id = var.secret_id
   role      = var.role
-  members   = var.members
+  members   = [for m in var.members : try(var.computed_members_map[regex("^computed:(.*)", m)[0]], m)]
 
   depends_on = [var.module_depends_on]
 }
 
 resource "google_secret_manager_secret_iam_member" "member" {
-  for_each = var.module_enabled && var.policy_bindings == null && var.authoritative == false ? var.members : []
+  for_each = local.create_member ? var.members : []
 
   project   = var.project
   secret_id = var.secret_id
   role      = var.role
-  member    = each.value
+  member    = try(var.computed_members_map[regex("^computed:(.*)", each.value)[0]], each.value)
 
   depends_on = [var.module_depends_on]
 }
 
 resource "google_secret_manager_secret_iam_policy" "policy" {
-  count = var.module_enabled && var.policy_bindings != null ? 1 : 0
+  count = local.create_policy ? 1 : 0
 
   project     = var.project
   secret_id   = var.secret_id
@@ -31,14 +37,14 @@ resource "google_secret_manager_secret_iam_policy" "policy" {
 }
 
 data "google_iam_policy" "policy" {
-  count = var.module_enabled && var.policy_bindings != null ? 1 : 0
+  count = local.create_policy ? 1 : 0
 
   dynamic "binding" {
-    for_each = [for pb in var.policy_bindings : pb if length(tolist(pb.members)) > 0]
+    for_each = var.policy_bindings
 
     content {
       role    = binding.value.role
-      members = binding.value.members
+      members = [for m in binding.value.members : try(var.computed_members_map[regex("^computed:(.*)", m)[0]], m)]
 
       dynamic "condition" {
         for_each = try([binding.value.condition], [])
