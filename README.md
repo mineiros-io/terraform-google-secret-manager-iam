@@ -49,7 +49,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-secret-manager-iam" {
-  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.0.4"
+  source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.1.0"
 
   secret_id = google_secret_manager_secret.secret-basic.secret_id
   role      = "roles/secretmanager.secretAccessor"
