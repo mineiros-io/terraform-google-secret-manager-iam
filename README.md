@@ -9,7 +9,7 @@
 A [Terraform] module to create a [Google Secret Manager IAM](https://cloud.google.com/secret-manager/docs/access-control) on [Google Cloud Services (GCP)](https://cloud.google.com/).
 
 **_This module supports Terraform version 1
-and is compatible with the Terraform Google Provider version 4._**
+and is compatible with the Terraform Google Provider version 4._** and 5._**
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
