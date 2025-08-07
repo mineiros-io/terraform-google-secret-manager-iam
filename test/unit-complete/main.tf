@@ -108,3 +108,18 @@ module "test4" {
 
   # add most/all other optional arguments
 }
+
+# principal and principalSet test
+module "test5" {
+  source = "../.."
+
+  secret_id = "unit-complete"
+
+  role = "roles/viewer"
+
+  authoritative = false
+  members = [
+    "principalSet://iam.googleapis.com/locations/global/workforcePools/test_pool/*",
+    "principal://iam.googleapis.com/locations/global/workforcePools/test_pool/subject/test_attribute",
+  ]
+}
