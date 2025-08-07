@@ -56,7 +56,7 @@ section {
 
       ```hcl
       module "terraform-google-secret-manager-iam" {
-        source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.1.0"
+        source = "github.com/mineiros-io/terraform-google-secret-manager-iam.git?ref=v0.3.0"
 
         secret_id = google_secret_manager_secret.secret-basic.secret_id
         role      = "roles/secretmanager.secretAccessor"
@@ -97,6 +97,8 @@ section {
             - `projectEditor:projectid`: Editors of the given project. For example, `projectEditor:my-example-project`
             - `projectViewer:projectid`: Viewers of the given project. For example, `projectViewer:my-example-project`
             - `computed:{identifier}`: An existing key from var.computed_members_map.
+            - `principal://{identifier}`: Principal identifier as documented by Google Cloud. For example `principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/subject/SUBJECT_ATTRIBUTE_VALUE`
+            - `principalSet://{identifier}`: Principal set identifier as documented by Google Cloud. For example `principalSet://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/*`
             END
         }
 
