@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "secret_id" {
-  description = "(Required) The resource name of the folder the policy is attached to. Its format is folders/{folder_id}."
+  description = "(Required) The resource name of the secret."
   type        = string
 }
 
